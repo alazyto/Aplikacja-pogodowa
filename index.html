@@ -24,14 +24,14 @@
                 <img src="images/humidity.png">
                 <div>
                     <p class="humidity">50%</p>
-                    <p>Humidity</p>
+                    <p>Wilgotność</p>
                 </div>
             </div>
             <div class="col">
                 <img src="images/wind.png">
                 <div>
                     <p class="wind">15 km/h</p>
-                    <p>Wind Speed</p>
+                    <p>Wiatr</p>
                 </div>
             </div>
         </div>
@@ -39,23 +39,29 @@
 </div>
 
 <script>
-
 const apiKey = "52cd0cd995005ee8bdfb10d4893672c3";
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=Kraków&appid=";
+const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
-async function checkWeather(){
-    const response = await fetch(apiUrl+apiKey);
+const searchBox = document.querySelector(".search input");
+const searchBtn = document.querySelector(".search button");
+
+async function checkWeather(city){
+
+    const response = await fetch(apiUrl +city+ `&appid=${apiKey}`);
     var data = await response.json();
- 
+
     console.log(data);
 
     document.querySelector(".city").innerHTML = data.name;
-    document.querySelector(".temp").innerHTML = data.main.temp + "°C";
-    document.querySelector(".humidity").innerHTML = data.main.humidity;
-    document.querySelector(".wind").innerHTML = data.wind.speed;
+    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+    document.querySelector(".wind").innerHTML = data.wind.speed +"km/h";
 }
 
-checkWeather();
+searchBtn.addEventListener("click", ()=>{
+      checkWeather(searchBox.value);
+})
+
 
 </script>
 
