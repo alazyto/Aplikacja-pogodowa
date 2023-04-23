@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+
 <div class="card">
     <div class="search">
         <input type="text" placeholder="Wprowadź nazwę miasta"
@@ -41,13 +41,109 @@
     </div>
 </div>
 
+
+<header>
+    <h2 class="logo">MeteoWeather</h2>
+    <nav class="navigation">
+        <a href="#">Home</a>
+        <a href="#">Pogoda</a>
+        <a href="#">Notatnik</a>
+        <a href="#">Kontakt</a>
+        <button class="btnlogin-popup">Zaloguj się</button>
+    </nav>
+</header>
+<div class="wrapper">
+    <span class="icon-close">
+    <ion-icon name="close"></ion-icon>
+    </span>
+    <div class="form-box login">
+        <h2>Zaloguj się</h2>
+        <form action="#">
+            <div class="input-box">
+                <span class="icon">
+                    <ion-icon name="mail"></ion-icon>
+                </span>
+                <input type="email" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon">
+                    <ion-icon name="lock-closed"></ion-icon>
+                </span>
+                <input type="password" required>
+                <label>Hasło</label>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox">
+                    Zapamiętaj mnie
+                </label>
+                <a href="#">
+                    Zapomniałaś/łeś hasła?
+                </a>
+            </div>
+            <button type="submit" class="btn">
+                Zaloguj się</button>
+            <div class="login-register">
+                <p>Nie masz konta?
+                    <a href="#" class="register-link">
+                    Zarejestruj się
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <div class="form-box register">
+        <h2>Rejestracja</h2>
+        <form action="#">
+            <div class="input-box">
+                <span class="icon">
+                   <ion-icon name="person-outline"></ion-icon>
+                </span>
+                <input type="text" required>
+                <label>Nazwa użytkownika</label>
+            </div>
+            <div class="input-box">
+                <span class="icon">
+                   <ion-icon name="mail-outline"></ion-icon>
+                </span>
+                <input type="email" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon">
+                   <ion-icon name="lock-closed-outline"></ion-icon>
+                </span>
+                <input type="password" required>
+                <label>Hasło</label>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox">
+                   Wyrażam zgodę na warunki użytkowania
+                </label>
+            </div>
+            <button type="submit" class="btn">
+                Zarejestruj się</button>
+            <div class="login-register">
+                <p>Posiadasz już konto?
+                    <a href="#" class="login-link">
+                    Zaloguj się
+                    </a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script>
+
 const apiKey = "52cd0cd995005ee8bdfb10d4893672c3";
 const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
 
 const searchBox = document.querySelector(".search input");
 const searchBtn = document.querySelector(".search button");
-const weatherIcon = document.querySelector(".weather-icon")
+const weatherIcon = document.querySelector(".weather-icon");
 
 async function checkWeather(city){
     const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
@@ -92,10 +188,17 @@ async function checkWeather(city){
 
 searchBtn.addEventListener("click", ()=>{
     checkWeather(searchBox.value);
-})
+});
+
+</script>
+<script src="script.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
+
 
 </script>
 
-
 </body>
 </html>
+
+
