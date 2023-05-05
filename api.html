@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>API Consumer</title>
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            th {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Aplikacja webowa</h1>
+        <header>
+            <form onsubmit="event.preventDefault(); updateLimit();">
+                <label for="limit">Limit:</label>
+                <input type="number" id="limit" name="limit" value="10">
+
+                <label for="min-characters">Min characters:</label>
+                <input type="number" id="min-characters" name="min-characters" value="">
+                <label for="max-characters">Max characters:</label>
+                <input type="number" id="max-characters" name="max-characters" value="">
+
+            </form>
+        </header>
+        <nav>
+            <ul>
+                <li><button onclick="loadPosts()">Posts</button></li>
+                <li><button onclick="loadComments()">Comments</button></li>
+                <li><button onclick="loadAlbums()">Albums</button></li>
+                <li><button onclick="loadPhotos()">Photos</button></li>
+            </ul>
+        </nav>
+        <hr>
+        <div id="content"></div>
+        <hr>
+        <script src="app.js"></script>
+    </body>
+</html>
