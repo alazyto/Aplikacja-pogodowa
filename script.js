@@ -312,3 +312,93 @@ await Promise.resolve();
 expect(errorDiv.style.display).toBe('none');
 expect(weatherDiv.style.display).toBe('block');
 });
+
+
+/*TESTY DO API*/
+//Testy jednostkowe:
+
+//Test sprawdzający, czy funkcja updateLimit ustawia odpowiednie wartości limitów z formularza:
+
+test('updateLimit ustawia odpowiednie wartości limitów', () => {
+  document.body.innerHTML = `
+    <form>
+      <input type="number" id="limit" name="limit" value="10">
+      <input type="number" id="min-characters" name="min-characters" value="">
+      <input type="number" id="max-characters" name="max-characters" value="">
+    </form>
+  `;
+
+  updateLimit();
+
+  expect(limit).toBe(10);
+  expect(minChars).toBe(null);
+  expect(maxChars).toBe(0);
+});
+Test sprawdzający, czy funkcja loadPosts wysyła poprawne żądanie HTTP i renderuje odpowiedni widok:
+scss
+Copy code
+test('loadPosts wysyła poprawne żądanie HTTP i renderuje odpowiedni widok', async () => {
+  const data = [    { userId: 1, id: 1, title: 'title 1', body: 'body 1' },    { userId: 2, id: 2, title: 'title 2', body: 'body 2' },  ];
+
+  jest.spyOn(window, 'fetch').mockImplementationOnce(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(data),
+    })
+  );
+
+  document.body.innerHTML = '<div id="content"></div>';
+
+  await loadPosts();
+
+  const content = document.querySelector('#content');
+
+  expect(window.fetch).toHaveBeenCalledWith('https://jsonplaceholder.typicode.com/posts?_limit=10');
+  expect(content.innerHTML).toContain('title 1');
+  expect(content.innerHTML).toContain('title 2');
+});
+//Testy integracyjne:
+
+//Test sprawdzający, czy przycisk "Posts" wywołuje funkcję loadPosts po kliknięciu:
+
+test('Przycisk "Posts" wywołuje funkcję loadPosts po kliknięciu', () => {
+  document.body.innerHTML = `
+    <nav>
+      <ul>
+        <li><button id="posts-btn" onclick="loadPosts()">Posts</button></li>
+      </ul>
+    </nav>
+  `;
+
+  const loadPostsSpy = jest.spyOn(window, 'loadPosts');
+
+  const postsBtn = document.querySelector('#posts-btn');
+  postsBtn.click();
+
+  expect(loadPostsSpy).toHaveBeenCalled();
+});
+//Test sprawdzający, czy zmiana wartości pola "Limit" powoduje zmianę parametru w funkcjach wysyłających żądania HTTP:
+
+test('Zmiana wartości pola "Limit" powoduje zmianę parametru w funkcjach wysyłających żądania HTTP', async () => {
+const data = [
+{ userId: 1, id: 1, title: 'title 1', body: 'body 1' },
+{ userId: 2, id: 2, title: 'title 2', body: 'body 2' },
+];
+
+jest.spyOn(window, 'fetch').mockImplementationOnce(() =>
+Promise.resolve({
+ok: true,
+json: () => Promise.resolve(data),
+})
+);
+
+// Tworzenie formularza i wywołanie funkcji updateLimit z wartością limitu równą 20
+document.body.innerHTML = <form> <input type="number" id="limit" name="limit" value="10"> </form> ;
+const newLimit = 20;
+updateLimit(newLimit);
+
+// Sprawdzenie, czy funkcje wysyłające żądania HTTP otrzymały nową wartość limitu
+expect(window.fetch).toHaveBeenCalledWith(
+expect.stringContaining(_limit=${newLimit})
+);
+});
