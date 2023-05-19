@@ -122,3 +122,7 @@ function displayData(data) {
     content.innerHTML = '';
     content.appendChild(table);
 }
+
+function goToWeatherPage() {
+    window.location.href = "index.html";
+  }
